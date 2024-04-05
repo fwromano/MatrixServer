@@ -4,10 +4,10 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 
 # Configuration for LED state and text window
-on_time_start = datetime.strptime("07:00", "%H:%M").time()  # LED on start time
+on_time_start = datetime.strptime("05:00", "%H:%M").time()  # LED on start time
 on_time_end = datetime.strptime("22:30", "%H:%M").time()    # LED on end time
-window_start = datetime.strptime("08:00", "%H:%M").time()   # Text window start time
-window_end = datetime.strptime("20:00", "%H:%M").time()     # Text window end time
+window_start = datetime.strptime("06:00", "%H:%M").time()   # Text window start time
+window_end = datetime.strptime("21:30", "%H:%M").time()     # Text window end time
 
 
 
@@ -18,17 +18,18 @@ def is_within_time_range(current, start, end):
 
 def calculate_brightness(current_time, start_time, end_time):
     """Calculate the brightness based on the current time within the interval."""
-    if current_time < start_time:
-        return 0.1
-    elif current_time > end_time:
-        return 1
-    else:
-        total_duration = (datetime.combine(datetime.today(), end_time) - 
-                          datetime.combine(datetime.today(), start_time)).total_seconds()
-        elapsed_duration = (datetime.combine(datetime.today(), current_time) - 
-                            datetime.combine(datetime.today(), start_time)).total_seconds()
-        # Linear interpolation between 0.1 and 1
-        return 0.1 + (elapsed_duration / total_duration) * (1 - 0.1)
+    return 1
+    # if current_time < start_time:
+    #     return 0.1
+    # elif current_time > end_time:
+    #     return .69
+    # else:
+    #     total_duration = (datetime.combine(datetime.today(), end_time) - 
+    #                       datetime.combine(datetime.today(), start_time)).total_seconds()
+    #     elapsed_duration = (datetime.combine(datetime.today(), current_time) - 
+    #                         datetime.combine(datetime.today(), start_time)).total_seconds()
+    #     # Linear interpolation between 0.1 and .69
+    #     return 0.1 + (elapsed_duration / total_duration) * (.69 - 0.1)
     
 
 @app.route('/text')
